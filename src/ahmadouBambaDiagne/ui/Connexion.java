@@ -4,7 +4,10 @@
  */
 package ahmadouBambaDiagne.ui;
 
+import ahmadouBambaDiagne.bdd.User;
+import ahmadouBambaDiagne.bdd.UserQueries;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -182,7 +185,34 @@ public class Connexion extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String username= this.jTextField1.getText();
+        String password = new String(this.jPasswordField1.getPassword());
+        ArrayList<String> errors= User.validFormInscription(username, password,"",true);
+        if(errors.isEmpty()){
+            UserQueries userRequest = new UserQueries();
+            String response=userRequest.findUser(username,password);
+            if("SUCCESSFUL".equals(response)){
+                 JOptionPane.showMessageDialog(this, 
+              "Connexion réussie",
+         " Tentative de connexion",
+         JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, 
+         response,
+         " Erreur(s)",
+         JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            String allErrors="";
+            for (String error : errors) {
+                allErrors+="\n_"+error;
+            }
+            JOptionPane.showMessageDialog(this, 
+         allErrors,
+         " Erreur(s)",
+         JOptionPane.WARNING_MESSAGE);
+        }// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

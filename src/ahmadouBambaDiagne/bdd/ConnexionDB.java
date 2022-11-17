@@ -18,11 +18,11 @@ public class ConnexionDB {
         public static Connection connecterDB() {
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver ok");
-            String url = "jdbc:mysql://localhost:3308/colobaneonline";
+            String url = "jdbc:mysql://localhost:3306/cryptojava";
             String user = "root";
-            String password = "";
+            String password = "Ir00t@dmin12";
             Connection cnx = DriverManager.getConnection(url, user, password);
             return cnx;
         } catch (ClassNotFoundException | SQLException e) {

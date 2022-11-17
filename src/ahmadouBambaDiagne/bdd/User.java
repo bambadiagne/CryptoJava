@@ -51,7 +51,7 @@ public class User {
        else if(!User.validatePassword(password) && !isLogin ){
           errors.add("La longueur mininum du mot de passe est de 8 caracteres"); 
        }
-       else if(!User.verifyField(confirmPassword)){
+       else if(!User.verifyField(confirmPassword) && !isLogin ){
            errors.add("Veuillez confirmer votre password");
        }
        else if(!password.equals(confirmPassword) && !isLogin){

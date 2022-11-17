@@ -6,6 +6,7 @@ package ahmadouBambaDiagne.ui;
 
 import java.util.ArrayList;
 import ahmadouBambaDiagne.bdd.User;
+import ahmadouBambaDiagne.bdd.UserQueries;
 import javax.swing.JOptionPane;
 /**
  *
@@ -211,7 +212,24 @@ public class Inscription extends javax.swing.JFrame {
         String confirmPassword = new String(this.jPasswordField2.getPassword());
         ArrayList<String> errors= User.validFormInscription(username, password,confirmPassword,false);
         if(errors.isEmpty()){
-       
+            UserQueries userRequest = new UserQueries();
+            String response=userRequest.addUser(new User(username,password));
+            if("SUCCESSFUL".equals(response)){
+                 JOptionPane.showMessageDialog(this, 
+              "Votre compte a été bien créé",
+         " Creation réussie",
+         JOptionPane.INFORMATION_MESSAGE);
+                   Connexion connexionForm = new Connexion();
+                    this.setVisible(false);
+                    this.dispose();
+                    connexionForm.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, 
+         response,
+         " Erreur(s)",
+         JOptionPane.WARNING_MESSAGE);
+            }
         }else{
             String allErrors="";
             for (String error : errors) {

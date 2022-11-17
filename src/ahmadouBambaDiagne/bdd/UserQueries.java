@@ -6,9 +6,7 @@ package ahmadouBambaDiagne.bdd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
 import ahmadouBambaDiagne.utils.Sha256;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,9 +31,9 @@ public class UserQueries {
         user.setPassword(Sha256.sha256(user.getPassword()));
         if(!isUserExists){
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO user (USERNAME,PASSWORD) VALUES(?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO users (USERNAME,PASSWORD) VALUES(?,?);");
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(3,user.getPassword());
+            preparedStatement.setString(2,user.getPassword());
    
 
             preparedStatement.executeUpdate();
@@ -50,11 +48,12 @@ public class UserQueries {
 
     }
 
-    public  boolean findUser(String email,String password) throws SQLException {
+    public String findUser(String username,String password){
         ResultSet rs = null;
+        password=Sha256.sha256(password);
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT *FROM acheteur where  USERNAME=? and PASSWORD=? ;");
-            preparedStatement.setString(1,email);
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT *FROM users where  USERNAME=? and PASSWORD=? ;");
+            preparedStatement.setString(1,username);
             preparedStatement.setString(2,password);
             preparedStatement.executeQuery();
 
@@ -63,14 +62,24 @@ public class UserQueries {
             
         } catch (SQLException e) {
             e.printStackTrace();
+            return e.toString();
         }
-         return rs.next();
-        
+        try {
+            if(rs.next()){
+                return "SUCCESSFUL";
+            }
+            else{
+                return "Combinaison username + mot de passe introuvable";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }   
     }
     public  boolean findUserByName(String username) throws SQLException {
         ResultSet rs = null;
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT *FROM user where  USERNAME=?;");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT *FROM users where  USERNAME=?;");
             preparedStatement.setString(1,username);
             preparedStatement.executeQuery();
 
