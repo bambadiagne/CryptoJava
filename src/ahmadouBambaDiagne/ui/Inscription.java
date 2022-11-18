@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import ahmadouBambaDiagne.bdd.User;
 import ahmadouBambaDiagne.bdd.UserQueries;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author hp
@@ -207,38 +208,37 @@ public class Inscription extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String username= this.jTextField1.getText();
+        String username = this.jTextField1.getText();
         String password = new String(this.jPasswordField1.getPassword());
         String confirmPassword = new String(this.jPasswordField2.getPassword());
-        ArrayList<String> errors= User.validFormInscription(username, password,confirmPassword,false);
-        if(errors.isEmpty()){
+        ArrayList<String> errors = User.validFormInscription(username, password, confirmPassword, false);
+        if (errors.isEmpty()) {
             UserQueries userRequest = new UserQueries();
-            String response=userRequest.addUser(new User(username,password));
-            if("SUCCESSFUL".equals(response)){
-                 JOptionPane.showMessageDialog(this, 
-              "Votre compte a été bien créé",
-         " Creation réussie",
-         JOptionPane.INFORMATION_MESSAGE);
-                   Connexion connexionForm = new Connexion();
-                    this.setVisible(false);
-                    this.dispose();
-                    connexionForm.setVisible(true);
+            String response = userRequest.addUser(new User(username, password));
+            if ("SUCCESSFUL".equals(response)) {
+                JOptionPane.showMessageDialog(this,
+                        "Votre compte a été bien créé",
+                        " Creation réussie",
+                        JOptionPane.INFORMATION_MESSAGE);
+                Connexion connexionForm = new Connexion();
+                this.setVisible(false);
+                this.dispose();
+                connexionForm.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        response,
+                        " Erreur(s)",
+                        JOptionPane.WARNING_MESSAGE);
             }
-            else{
-                JOptionPane.showMessageDialog(this, 
-         response,
-         " Erreur(s)",
-         JOptionPane.WARNING_MESSAGE);
-            }
-        }else{
-            String allErrors="";
+        } else {
+            String allErrors = "";
             for (String error : errors) {
-                allErrors+="\n_"+error;
+                allErrors += "\n-" + error;
             }
-            JOptionPane.showMessageDialog(this, 
-         allErrors,
-         " Erreur(s)",
-         JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    allErrors,
+                    " Erreur(s)",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

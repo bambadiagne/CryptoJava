@@ -6,6 +6,7 @@ package ahmadouBambaDiagne.ui;
 
 import ahmadouBambaDiagne.bdd.User;
 import ahmadouBambaDiagne.bdd.UserQueries;
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -49,15 +50,18 @@ public class Connexion extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(102, 255, 255));
+        setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.yellow);
         getContentPane().setLayout(new java.awt.GridLayout(3, 1));
 
+        jPanel6.setBackground(new java.awt.Color(102, 102, 102));
         jPanel6.setForeground(new java.awt.Color(255, 255, 153));
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Sitka Display", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("LOGICIEL DE CRYPTOGRAPHIE");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -68,6 +72,8 @@ public class Connexion extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(31, 247, 0, 263);
         jPanel6.add(jLabel1, gridBagConstraints);
 
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/connexion (1).png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -80,17 +86,19 @@ public class Connexion extends javax.swing.JFrame {
 
         getContentPane().add(jPanel6);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 1, 0, 1));
+        jPanel7.setLayout(new java.awt.GridLayout(2, 1));
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nom d'utilisateur");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 147, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(28, 140, 0, 0);
         jPanel1.add(jLabel3, gridBagConstraints);
 
         jTextField1.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
@@ -108,14 +116,18 @@ public class Connexion extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 269;
         gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 29, 45, 229);
+        gridBagConstraints.insets = new java.awt.Insets(16, 29, 43, 222);
         jPanel1.add(jTextField1, gridBagConstraints);
 
         jPanel7.add(jPanel1);
 
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setPreferredSize(new java.awt.Dimension(838, 108));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Mot de passe");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -144,12 +156,17 @@ public class Connexion extends javax.swing.JFrame {
 
         getContentPane().add(jPanel7);
 
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
+        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel8.setPreferredSize(new java.awt.Dimension(462, 60));
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 40));
 
+        jButton1.setBackground(new java.awt.Color(0, 163, 163));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CONNEXION");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jButton1.setBorder(new javax.swing.border.MatteBorder(null));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.setFocusCycleRoot(true);
         jButton1.setMaximumSize(new java.awt.Dimension(100, 40));
         jButton1.setMinimumSize(new java.awt.Dimension(60, 20));
         jButton1.setPreferredSize(new java.awt.Dimension(200, 60));
@@ -160,9 +177,12 @@ public class Connexion extends javax.swing.JFrame {
         });
         jPanel8.add(jButton1);
 
+        jButton2.setBackground(new java.awt.Color(0, 163, 163));
         jButton2.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("INSCRIPTION");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jButton2.setAutoscrolls(true);
+        jButton2.setBorder(new javax.swing.border.MatteBorder(null));
         jButton2.setPreferredSize(new java.awt.Dimension(200, 60));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +216,10 @@ public class Connexion extends javax.swing.JFrame {
               "Connexion réussie",
          " Tentative de connexion",
          JOptionPane.INFORMATION_MESSAGE);
+            Home homeFrame = new Home();
+        this.setVisible(false);
+        this.dispose();
+        homeFrame.setVisible(true);
             }
             else{
                 JOptionPane.showMessageDialog(this, 
@@ -206,7 +230,7 @@ public class Connexion extends javax.swing.JFrame {
         }else{
             String allErrors="";
             for (String error : errors) {
-                allErrors+="\n_"+error;
+                allErrors+="\n- "+error;
             }
             JOptionPane.showMessageDialog(this, 
          allErrors,
