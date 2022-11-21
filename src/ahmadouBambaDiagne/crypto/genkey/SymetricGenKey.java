@@ -66,12 +66,41 @@ public class SymetricGenKey {
         return "SUCCESSFUL";
     }
 
-     public static SecretKey getKey(String filePath) throws Exception {
-		FileInputStream fileInputStream = new FileInputStream(filePath);
-		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-		SecretKey secretKey = (SecretKey) objectInputStream.readObject();
-		objectInputStream.close();
-		return secretKey;
+     public static HashMap<String,SecretKey> getKey(String filePath){
+	HashMap<String,SecretKey> result = new HashMap<>();
+         FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(filePath);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Fichier introuvable",null);
+            return result;
+        }
+		ObjectInputStream objectInputStream = null;
+        try {
+            objectInputStream = new ObjectInputStream(fileInputStream);
+        } catch (IOException ex) {
+            Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier",null);
+            return result;
+        }
+		SecretKey secretKey = null;
+        try {
+            secretKey = (SecretKey) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Classe introuvable || Erreur d'operations avec le fichier",null);
+            return  result;
+        }
+        try {
+            objectInputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier",null);
+            return result;
+        }
+        result.put("SUCCESSFUL",secretKey);
+		return result;
 	}  
      
 }
