@@ -27,19 +27,19 @@ public class SymetricGenKey {
     public static HashMap<String, String> genKey(String algorithm, int keySize, String filePath) {
         KeyGenerator keyGenerator;
         HashMap<String, String> result = new HashMap<>();
-        String encodedKey="";
+        String encodedKey = "";
         try {
             keyGenerator = KeyGenerator.getInstance(algorithm);
             keyGenerator.init(keySize);
             SecretKey secretKey = keyGenerator.generateKey();
             encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-            String saveResult=saveKey(secretKey, filePath);
-            result.put(encodedKey,saveResult);
-            return  result;
+            String saveResult = saveKey(secretKey, filePath);
+            result.put(encodedKey, saveResult);
+            return result;
 
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
-            result.put(encodedKey,"Cet algorithme n'existe pas");
+            result.put(encodedKey, "Cet algorithme n'existe pas");
             return result;
         }
     }
@@ -66,41 +66,41 @@ public class SymetricGenKey {
         return "SUCCESSFUL";
     }
 
-     public static HashMap<String,SecretKey> getKey(String filePath){
-	HashMap<String,SecretKey> result = new HashMap<>();
-         FileInputStream fileInputStream = null;
+    public static HashMap<String, SecretKey> getKey(String filePath) {
+        HashMap<String, SecretKey> result = new HashMap<>();
+        FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(filePath);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
-            result.put("Fichier introuvable",null);
+            result.put("Fichier introuvable", null);
             return result;
         }
-		ObjectInputStream objectInputStream = null;
+        ObjectInputStream objectInputStream = null;
         try {
             objectInputStream = new ObjectInputStream(fileInputStream);
         } catch (IOException ex) {
             Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
-            result.put("Erreur d'operations avec le fichier",null);
+            result.put("Erreur d'operations avec le fichier", null);
             return result;
         }
-		SecretKey secretKey = null;
+        SecretKey secretKey = null;
         try {
             secretKey = (SecretKey) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
-            result.put("Classe introuvable || Erreur d'operations avec le fichier",null);
-            return  result;
+            result.put("Classe introuvable || Erreur d'operations avec le fichier", null);
+            return result;
         }
         try {
             objectInputStream.close();
         } catch (IOException ex) {
             Logger.getLogger(SymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
-            result.put("Erreur d'operations avec le fichier",null);
+            result.put("Erreur d'operations avec le fichier", null);
             return result;
         }
-        result.put("SUCCESSFUL",secretKey);
-		return result;
-	}  
-     
+        result.put("SUCCESSFUL", secretKey);
+        return result;
+    }
+
 }

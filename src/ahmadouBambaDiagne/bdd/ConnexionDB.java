@@ -9,13 +9,13 @@ import java.sql.SQLException;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author user
  */
 public class ConnexionDB {
-        public static Connection connecterDB() {
+
+    public static Connection connecterDB() {
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");

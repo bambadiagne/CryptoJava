@@ -11,6 +11,9 @@ import javax.swing.JFileChooser;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import ahmadouBambaDiagne.crypto.genkey.SymetricGenKey;
 import ahmadouBambaDiagne.crypto.genkey.AsymetricGenKey;
+import ahmadouBambaDiagne.crypto.ciphers.SymetricCipher;
+import ahmadouBambaDiagne.crypto.ciphers.AsymetricCipher;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -19,6 +22,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import javax.crypto.SecretKey;
 
 /**
  *
@@ -36,9 +42,8 @@ public class Home extends javax.swing.JFrame {
 
     }
 
-    public void initDSAKeySize() {
+    public final void initDSAKeySize() {
         int start = 512;
-        int end = 1024;
         int keyLength = start / 64 + 1;
         this.DSAKeySize = new String[keyLength];
         for (int i = 0; i < keyLength; i++) {
@@ -65,6 +70,8 @@ public class Home extends javax.swing.JFrame {
         this.buttonGroup1.add(this.JRadioDSA);
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -74,7 +81,6 @@ public class Home extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         JRetour = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         JRadioAES = new javax.swing.JRadioButton();
         JRadioDES = new javax.swing.JRadioButton();
@@ -108,6 +114,10 @@ public class Home extends javax.swing.JFrame {
         jPanel16 = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jRadioFichier = new javax.swing.JRadioButton();
+        jRadioTexte = new javax.swing.JRadioButton();
         jPanel24 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jRadioSync = new javax.swing.JRadioButton();
@@ -118,22 +128,25 @@ public class Home extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButtonUpload1 = new javax.swing.JButton();
+        jButtonCipher = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
+        jButtonUploadKey = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
-        jButton7 = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jPanel31 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jRadioFichier1 = new javax.swing.JRadioButton();
+        jRadioTexte1 = new javax.swing.JRadioButton();
         jPanel30 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jRadioDSync1 = new javax.swing.JRadioButton();
@@ -141,11 +154,11 @@ public class Home extends javax.swing.JFrame {
         jPanel26 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jButton9 = new javax.swing.JButton();
+        jButtonDecrypt = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
-        jButton10 = new javax.swing.JButton();
+        jButtonUpload2 = new javax.swing.JButton();
         jPanel27 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -153,8 +166,7 @@ public class Home extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea6 = new javax.swing.JTextArea();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        jButtonUploadKey2 = new javax.swing.JButton();
         jPanel28 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -163,6 +175,12 @@ public class Home extends javax.swing.JFrame {
 
         this.buttonGroup4.add(this.jRadioDSync1);
         this.buttonGroup4.add(this.jRadioDAsync1);
+
+        buttonGroup5.add(jRadioTexte);
+        buttonGroup5.add(jRadioFichier);
+
+        buttonGroup6.add(jRadioTexte1);
+        buttonGroup6.add(jRadioFichier1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(46, 60, 126));
@@ -225,6 +243,7 @@ public class Home extends javax.swing.JFrame {
         jPanel4.setLayout(new java.awt.GridLayout(4, 1));
 
         jPanel7.setBackground(new java.awt.Color(251, 234, 235));
+        jPanel7.setPreferredSize(new java.awt.Dimension(565, 114));
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(46, 60, 126));
@@ -239,38 +258,9 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(288, 288, 288)
-                .addComponent(jLabel2))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(JRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22))
-        );
-
-        jPanel4.add(jPanel7);
-
-        jPanel8.setBackground(new java.awt.Color(251, 234, 235));
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 50));
-
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(46, 60, 126));
         jLabel3.setText("Choix de l'algorithme");
-        jPanel8.add(jLabel3);
 
         JRadioAES.setBackground(new java.awt.Color(251, 234, 235));
         JRadioAES.setForeground(new java.awt.Color(46, 60, 126));
@@ -281,7 +271,6 @@ public class Home extends javax.swing.JFrame {
                 JRadioAESActionPerformed(evt);
             }
         });
-        jPanel8.add(JRadioAES);
 
         JRadioDES.setBackground(new java.awt.Color(251, 234, 235));
         JRadioDES.setForeground(new java.awt.Color(46, 60, 126));
@@ -291,9 +280,44 @@ public class Home extends javax.swing.JFrame {
                 JRadioDESActionPerformed(evt);
             }
         });
-        jPanel8.add(JRadioDES);
 
-        jPanel4.add(jPanel8);
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(JRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(272, 272, 272)
+                .addComponent(jLabel2)
+                .addGap(357, 357, 357))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(0, 0, 0)
+                .addComponent(JRadioAES)
+                .addGap(0, 0, 0)
+                .addComponent(JRadioDES)
+                .addGap(443, 443, 443))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(JRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel3))
+                    .addComponent(JRadioAES)
+                    .addComponent(JRadioDES))
+                .addGap(41, 41, 41))
+        );
+
+        jPanel4.add(jPanel7);
 
         jPanel9.setBackground(new java.awt.Color(251, 234, 235));
         jPanel9.setLayout(new java.awt.GridLayout(2, 1));
@@ -317,6 +341,7 @@ public class Home extends javax.swing.JFrame {
         jPanel9.add(jPanel11);
 
         jPanel12.setBackground(new java.awt.Color(251, 234, 235));
+        jPanel12.setLayout(new java.awt.GridBagLayout());
 
         jButton3.setBackground(new java.awt.Color(46, 60, 126));
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
@@ -327,29 +352,20 @@ public class Home extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addContainerGap(1879, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(481, 481, 481))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 69;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(41, 517, 35, 454);
+        jPanel12.add(jButton3, gridBagConstraints);
 
         jPanel9.add(jPanel12);
 
         jPanel4.add(jPanel9);
 
         jPanel10.setBackground(new java.awt.Color(251, 234, 235));
+        jPanel10.setLayout(new java.awt.GridBagLayout());
 
         jButton4.setBackground(new java.awt.Color(46, 60, 126));
         jButton4.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
@@ -362,6 +378,14 @@ public class Home extends javax.swing.JFrame {
             }
         });
         //this.jButton4.setVisible(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 78;
+        gridBagConstraints.ipady = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(50, 14, 0, 0);
+        jPanel10.add(jButton4, gridBagConstraints);
 
         jTextField1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jTextField1.setEnabled(false);
@@ -376,27 +400,15 @@ public class Home extends javax.swing.JFrame {
             }
         });
         //jTextField1.setVisible(false);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 408;
+        gridBagConstraints.ipady = 31;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 64, 113, 421);
+        jPanel10.add(jTextField1, gridBagConstraints);
 
         jPanel4.add(jPanel10);
 
@@ -527,7 +539,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -548,12 +560,41 @@ public class Home extends javax.swing.JFrame {
         jPanel16.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel23.setBackground(new java.awt.Color(251, 234, 235));
-        jPanel23.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
+        jPanel23.setLayout(new java.awt.GridLayout(2, 1));
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(46, 60, 126));
         jLabel1.setText("CHIFFREMENT");
         jPanel23.add(jLabel1);
+
+        jPanel8.setBackground(new java.awt.Color(251, 234, 235));
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel21.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel21.setText("Type de document");
+        jPanel8.add(jLabel21);
+
+        jRadioFichier.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioFichier.setText("fichier");
+        jRadioFichier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioFichierActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jRadioFichier);
+
+        jRadioTexte.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioTexte.setSelected(true);
+        jRadioTexte.setText("texte");
+        jRadioTexte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioTexteActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jRadioTexte);
+
+        jPanel23.add(jPanel8);
 
         jPanel16.add(jPanel23);
 
@@ -596,28 +637,38 @@ public class Home extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(46, 60, 126));
         jLabel14.setText("Algorithme");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel13.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(46, 60, 126));
         jLabel13.setText("Texte à chiffrer");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton5.setBackground(new java.awt.Color(46, 60, 126));
-        jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(251, 234, 235));
-        jButton5.setText("Choisir un fichier");
-
-        jButton8.setBackground(new java.awt.Color(46, 60, 126));
-        jButton8.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(251, 234, 235));
-        jButton8.setText("CHIFFRER");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButtonUpload1.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonUpload1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButtonUpload1.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonUpload1.setText("Choisir un fichier");
+        jButtonUpload1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonUpload1.setEnabled(false);
+        jButtonUpload1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButtonUpload1ActionPerformed(evt);
+            }
+        });
+
+        jButtonCipher.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonCipher.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonCipher.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonCipher.setText("CHIFFRER");
+        jButtonCipher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCipherActionPerformed(evt);
             }
         });
 
@@ -632,15 +683,15 @@ public class Home extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonCipher, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonUpload1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(67, 67, 67))
         );
         jPanel18Layout.setVerticalGroup(
@@ -650,17 +701,16 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8))
+                    .addComponent(jButtonCipher))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel13)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
-                        .addGap(68, 68, 68))))
+                    .addGroup(jPanel18Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jButtonUpload1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jPanel19.add(jPanel18);
@@ -673,13 +723,29 @@ public class Home extends javax.swing.JFrame {
         jLabel15.setText("Entrer la clé (en base64)");
 
         jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
+        jTextArea2.setRows(8);
+        jTextArea2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea2MouseClicked(evt);
+            }
+        });
+        jTextArea2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea2KeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton6.setBackground(new java.awt.Color(46, 60, 126));
-        jButton6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(251, 234, 235));
-        jButton6.setText("Charger une clé");
+        jButtonUploadKey.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonUploadKey.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButtonUploadKey.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonUploadKey.setText("Charger une clé");
+        jButtonUploadKey.setEnabled(false);
+        jButtonUploadKey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUploadKeyActionPerformed(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(46, 60, 126));
@@ -687,12 +753,14 @@ public class Home extends javax.swing.JFrame {
 
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
+        jTextArea4.setDisabledTextColor(Color.BLACK);
+        jTextArea4.setEnabled(false);
+        jTextArea4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea4MouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTextArea4);
-
-        jButton7.setBackground(new java.awt.Color(46, 60, 126));
-        jButton7.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(251, 234, 235));
-        jButton7.setText("Enregistrer sous");
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -705,13 +773,10 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonUploadKey, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel16)
-                    .addGroup(jPanel21Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,19 +784,14 @@ public class Home extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonUploadKey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel16)
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel21Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel21Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton7)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel19.add(jPanel21);
@@ -742,7 +802,7 @@ public class Home extends javax.swing.JFrame {
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,12 +820,41 @@ public class Home extends javax.swing.JFrame {
         jPanel25.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel29.setBackground(new java.awt.Color(251, 234, 235));
-        jPanel29.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
+        jPanel29.setLayout(new java.awt.GridLayout(2, 1, 20, 0));
 
         jLabel11.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(46, 60, 126));
         jLabel11.setText("DECHIFFREMENT");
         jPanel29.add(jLabel11);
+
+        jPanel31.setBackground(new java.awt.Color(251, 234, 235));
+        jPanel31.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel22.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel22.setText("Type de document");
+        jPanel31.add(jLabel22);
+
+        jRadioFichier1.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioFichier1.setText("fichier");
+        jRadioFichier1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioFichier1ActionPerformed(evt);
+            }
+        });
+        jPanel31.add(jRadioFichier1);
+
+        jRadioTexte1.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioTexte1.setSelected(true);
+        jRadioTexte1.setText("texte");
+        jRadioTexte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioTexte1ActionPerformed(evt);
+            }
+        });
+        jPanel31.add(jRadioTexte1);
+
+        jPanel29.add(jPanel31);
 
         jPanel25.add(jPanel29);
 
@@ -807,15 +896,13 @@ public class Home extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(46, 60, 126));
         jLabel17.setText("Algorithme");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton9.setBackground(new java.awt.Color(46, 60, 126));
-        jButton9.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(251, 234, 235));
-        jButton9.setText("DECHIFFRER");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDecrypt.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonDecrypt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonDecrypt.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonDecrypt.setText("DECHIFFRER");
+        jButtonDecrypt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jButtonDecryptActionPerformed(evt);
             }
         });
 
@@ -825,12 +912,23 @@ public class Home extends javax.swing.JFrame {
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
+        jTextArea3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea3KeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTextArea3);
 
-        jButton10.setBackground(new java.awt.Color(46, 60, 126));
-        jButton10.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(251, 234, 235));
-        jButton10.setText("Choisir un fichier");
+        jButtonUpload2.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonUpload2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButtonUpload2.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonUpload2.setText("Choisir un fichier");
+        jButtonUpload2.setEnabled(false);
+        jButtonUpload2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpload2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -843,16 +941,16 @@ public class Home extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonDecrypt, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel26Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
                             .addGroup(jPanel26Layout.createSequentialGroup()
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(67, 67, 67))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonUpload2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(42, 42, 42))
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -861,17 +959,16 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9))
+                    .addComponent(jButtonDecrypt))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel18)
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel26Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton10)
-                        .addGap(68, 68, 68))))
+                    .addGroup(jPanel26Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jButtonUpload2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jPanel20.add(jPanel26);
@@ -884,26 +981,43 @@ public class Home extends javax.swing.JFrame {
 
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
+        jTextArea5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea5MouseClicked(evt);
+            }
+        });
+        jTextArea5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea5KeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTextArea5);
 
         jLabel20.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(46, 60, 126));
-        jLabel20.setText("Texte en clair(en base64)");
+        jLabel20.setText("Texte en clair");
 
         jTextArea6.setColumns(20);
         jTextArea6.setRows(5);
+        jTextArea6.setEnabled(false);
+        jTextArea6.setDisabledTextColor(Color.BLACK);
+        jTextArea6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea6MouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jTextArea6);
 
-        jButton11.setBackground(new java.awt.Color(46, 60, 126));
-        jButton11.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(251, 234, 235));
-        jButton11.setText("Charger une clé");
-
-        jButton12.setBackground(new java.awt.Color(46, 60, 126));
-        jButton12.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(251, 234, 235));
-        jButton12.setText("Enregistrer sous");
-        jButton12.setAutoscrolls(true);
+        jButtonUploadKey2.setBackground(new java.awt.Color(46, 60, 126));
+        jButtonUploadKey2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButtonUploadKey2.setForeground(new java.awt.Color(251, 234, 235));
+        jButtonUploadKey2.setText("Charger une clé");
+        jButtonUploadKey2.setEnabled(false);
+        jButtonUploadKey2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUploadKey2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -916,13 +1030,10 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanel27Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonUploadKey2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel20)
-                    .addGroup(jPanel27Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel27Layout.setVerticalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -930,19 +1041,14 @@ public class Home extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton11)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonUploadKey2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel20)
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel27Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel27Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel20.add(jPanel27);
@@ -953,7 +1059,7 @@ public class Home extends javax.swing.JFrame {
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1300, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1026,7 +1132,6 @@ public class Home extends javax.swing.JFrame {
         this.JRadioDES.setSelected(false);
     }//GEN-LAST:event_JRadioAESActionPerformed
 
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String chosenAlgorithm;
         if (this.JRadioAES.isSelected()) {
@@ -1075,7 +1180,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-        this.writeToClipboard(this.jTextField1.getText(), null);       // TODO add your handling code here:
+        this.writeToClipboard(this.jTextField1.getText(), null, "La clé est copié dans le presse papier");       // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1MouseClicked
 
     private void JRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRetourActionPerformed
@@ -1126,34 +1231,311 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAsyncGenKeyActionPerformed
 
     private void jRadioSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioSyncActionPerformed
-        // TODO add your handling code here:
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(this.symetricCiphersAlgorithm));
     }//GEN-LAST:event_jRadioSyncActionPerformed
 
     private void jRadioDSync1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioDSync1ActionPerformed
-        // TODO add your handling code here:
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(this.symetricCiphersAlgorithm));
     }//GEN-LAST:event_jRadioDSync1ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jButtonCipherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCipherActionPerformed
+        SecretKey sk = null;
+        RSAPublicKey sPub = null;
+        if (!this.jRadioAsync.isSelected() && !this.jRadioSync.isSelected()) {
+            this.showMessage("Erreur", "Veuillez choisir un type de chiffrement", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String selectedAlgorithm = jComboBox3.getSelectedItem().toString();
+            if (this.jRadioFichier.isSelected()) {
+                if (null != this.filePathKey) {
+                    HashMap<String, SecretKey> resultKey = null;
+                    HashMap<String, RSAPublicKey> asyResultKey = null;
+                    String opResult = null;
+                    if (this.jRadioSync.isSelected()) {
+                        resultKey = SymetricGenKey.getKey(this.filePathKey);
+                        Map.Entry<String, SecretKey> entry = resultKey.entrySet().iterator().next();
+                        opResult = entry.getKey();
+                        sk = entry.getValue();
+                    } else {
+                        asyResultKey = AsymetricGenKey.getPublicKey(this.filePathKey);
+                        Map.Entry<String, RSAPublicKey> entry = asyResultKey.entrySet().iterator().next();
+                        opResult = entry.getKey();
+                        sPub = entry.getValue();
+                    }
+                    if (opResult.equals("SUCCESSFUL")) {
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+                        if (null != this.filePathText) {
+                            int res = fileChooser.showSaveDialog(this);
+                            if (res != JFileChooser.APPROVE_OPTION) {
+                                this.showMessage("Erreur", "Veuillez choisir le fichier de sortie", JOptionPane.WARNING_MESSAGE);
+                            } else {
+                                File fileToSave = fileChooser.getSelectedFile();
+                                String fileOuput = fileToSave.getAbsolutePath();
+                                HashMap<String, String> result = null;
+                                if (this.jRadioSync.isSelected()) {
+                                    result = SymetricCipher.crypt(this.filePathText, fileOuput, sk, selectedAlgorithm);
+                                } else {
+                                    result = AsymetricCipher.crypt(this.filePathText, fileOuput, sPub, selectedAlgorithm);
+                                }
+                                Map.Entry<String, String> entry2 = result.entrySet().iterator().next();
+                                String opResult2 = entry2.getKey();
+
+                                if (opResult2.equals("SUCCESSFUL")) {
+                                    this.showMessage("Operation reussie", "Chiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
+                                    String cipherContent = entry2.getValue();
+                                    this.jTextArea4.setText(cipherContent);
+                                }
+
+                            }
+                        } else {
+                            this.showMessage("Erreur", "Veuillez choisir le fichier que vous voulez chiffrer", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } else {
+                        this.showMessage("Erreur", opResult, JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+
+            } else {
+                String text = this.jTextArea1.getText();
+                String key = this.jTextArea2.getText();
+                if (text.isEmpty() && key.isEmpty()) {
+                    this.showMessage("Erreurs", "- Texte vide \n - Clé introuvable", HEIGHT);
+                } else if (!text.isEmpty() && key.isEmpty()) {
+                    this.showMessage("Erreurs", "Clé introuvable", HEIGHT);
+
+                } else if (text.isEmpty() && !key.isEmpty()) {
+                    this.showMessage("Erreurs", "- Texte vide", HEIGHT);
+                } else {
+                    HashMap<String, String> result = null;
+
+                    if (this.jRadioSync.isSelected()) {
+                        result = SymetricCipher.cryptorDecryptString(text, key, selectedAlgorithm, 1);
+                    } else {
+                        result = AsymetricCipher.cryptString(text, key, selectedAlgorithm);
+                    }
+                    Map.Entry<String, String> entry = result.entrySet().iterator().next();
+                    String opResult = entry.getKey();
+
+                    if (opResult.equals("SUCCESSFUL")) {
+                        this.showMessage("Operation reussie", "Chiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
+                        String cipherContent = entry.getValue();
+                        this.jTextArea4.setText(cipherContent);
+
+                    }
+
+                }
+
+            }
+
+        }
+        //  HashMap<String, String> result=SymetricCipher.crypt(this.filePathText,this.filePathText+"1\\"+"a" ,sk,"AES");
+    }//GEN-LAST:event_jButtonCipherActionPerformed
+
+    private void jButtonDecryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecryptActionPerformed
+        SecretKey sk = null;
+        RSAPrivateKey sPriv = null;
+        if (!this.jRadioDAsync1.isSelected() && !this.jRadioDSync1.isSelected()) {
+            this.showMessage("Erreur", "Veuillez choisir un type de chiffrement", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String selectedAlgorithm = jComboBox4.getSelectedItem().toString();
+            if (this.jRadioFichier1.isSelected()) {
+                if (null != this.filePathKey) {
+                    HashMap<String, SecretKey> resultKey = null;
+                    HashMap<String, RSAPrivateKey> asyResultKey = null;
+                    String opResult = null;
+                    if (this.jRadioDSync1.isSelected()) {
+                        resultKey = SymetricGenKey.getKey(this.filePathKey);
+                        Map.Entry<String, SecretKey> entry = resultKey.entrySet().iterator().next();
+                        opResult = entry.getKey();
+                        sk = entry.getValue();
+                    } else {
+                        asyResultKey = AsymetricGenKey.getPrivateKey(this.filePathKey);
+                        Map.Entry<String, RSAPrivateKey> entry = asyResultKey.entrySet().iterator().next();
+                        opResult = entry.getKey();
+                        sPriv = entry.getValue();
+                    }
+                    if (opResult.equals("SUCCESSFUL")) {
+
+                        if (null != this.filePathText) {
+                            int res = fileChooser.showSaveDialog(this);
+                            if (res != JFileChooser.APPROVE_OPTION) {
+                                this.showMessage("Erreur", "Veuillez choisir le fichier de sortie", JOptionPane.WARNING_MESSAGE);
+                            } else {
+                                File fileToSave = fileChooser.getSelectedFile();
+                                String fileOuput = fileToSave.getAbsolutePath();
+                                HashMap<String, String> result = null;
+                                if (this.jRadioDSync1.isSelected()) {
+                                    result = SymetricCipher.decrypt(this.filePathText, fileOuput, sk, selectedAlgorithm);
+                                } else {
+                                    result = AsymetricCipher.decrypt(this.filePathText, fileOuput, sPriv, selectedAlgorithm);
+                                }
+                                Map.Entry<String, String> entry2 = result.entrySet().iterator().next();
+                                String opResult2 = entry2.getKey();
+
+                                if (opResult2.equals("SUCCESSFUL")) {
+                                    this.showMessage("Operation reussie", "Dechiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
+                                    String cipherContent = entry2.getValue();
+                                    this.jTextArea6.setText(cipherContent);
+                                }
+
+                            }
+                        } else {
+                            this.showMessage("Erreur", "Veuillez choisir le fichier que vous voulez chiffrer", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } else {
+                        this.showMessage("Erreur", opResult, JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+
+            } else {
+                String text = this.jTextArea3.getText();
+                String key = this.jTextArea5.getText();
+                if (text.isEmpty() && key.isEmpty()) {
+                    this.showMessage("Erreurs", "- Texte vide \n - Clé introuvable", JOptionPane.WARNING_MESSAGE);
+                } else if (!text.isEmpty() && key.isEmpty()) {
+                    this.showMessage("Erreurs", "Clé introuvable", JOptionPane.WARNING_MESSAGE);
+
+                } else if (text.isEmpty() && !key.isEmpty()) {
+                    this.showMessage("Erreurs", "- Texte vide", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    HashMap<String, String> result = null;
+
+                    if (this.jRadioDSync1.isSelected()) {
+                        result = SymetricCipher.cryptorDecryptString(text, key, selectedAlgorithm, 2);
+                    } else {
+                        result = AsymetricCipher.decryptString(text, key, selectedAlgorithm);
+                    }
+                    Map.Entry<String, String> entry = result.entrySet().iterator().next();
+                    String opResult = entry.getKey();
+
+                    if (opResult.equals("SUCCESSFUL")) {
+                        this.showMessage("Operation reussie", "Chiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
+                        String cipherContent = entry.getValue();
+                        this.jTextArea6.setText(cipherContent);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }//GEN-LAST:event_jButtonDecryptActionPerformed
 
     private void jRadioAsyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioAsyncActionPerformed
-        // TODO add your handling code here:
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(this.asymetricCiphersAlgorithm));
     }//GEN-LAST:event_jRadioAsyncActionPerformed
 
     private void jRadioDAsync1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioDAsync1ActionPerformed
-        // TODO add your handling code here:
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(this.asymetricCiphersAlgorithm));
     }//GEN-LAST:event_jRadioDAsync1ActionPerformed
 
-    public void writeToClipboard(String s, ClipboardOwner owner) {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable transferable = new StringSelection(s);
-        clipboard.setContents(transferable, owner);
-        this.showMessage("Copie clé", "La clé est copié dans le presse papier", JOptionPane.INFORMATION_MESSAGE);
+    private void jButtonUpload1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpload1ActionPerformed
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            this.filePathText = fileToSave.getAbsolutePath();
+        }
+
+    }//GEN-LAST:event_jButtonUpload1ActionPerformed
+
+    private void jButtonUploadKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUploadKeyActionPerformed
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            this.filePathKey = fileToSave.getAbsolutePath();
+        }
+
+    }//GEN-LAST:event_jButtonUploadKeyActionPerformed
+
+    private void jTextArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyPressed
+
+    }//GEN-LAST:event_jTextArea1KeyPressed
+
+    private void jTextArea3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea3KeyPressed
+
+    }//GEN-LAST:event_jTextArea3KeyPressed
+
+    private void jTextArea2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea2MouseClicked
+
+    private void jTextArea5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea5KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea5KeyPressed
+
+    private void jTextArea5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea5MouseClicked
+
+    private void jTextArea2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyPressed
+
+    }//GEN-LAST:event_jTextArea2KeyPressed
+
+    private void jButtonUpload2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpload2ActionPerformed
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            this.filePathText = fileToSave.getAbsolutePath();
+        }
+    }//GEN-LAST:event_jButtonUpload2ActionPerformed
+
+    private void jButtonUploadKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUploadKey2ActionPerformed
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            this.filePathKey = fileToSave.getAbsolutePath();
+        }
+    }//GEN-LAST:event_jButtonUploadKey2ActionPerformed
+
+    private void jRadioFichierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioFichierActionPerformed
+        this.jTextArea1.setVisible(false);
+        this.jTextArea2.setVisible(false);
+        this.jButtonUpload1.setEnabled(true);
+        this.jButtonUploadKey.setEnabled(true);
+
+    }//GEN-LAST:event_jRadioFichierActionPerformed
+
+    private void jRadioTexteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioTexteActionPerformed
+        this.jTextArea1.setVisible(true);
+        this.jTextArea2.setVisible(true);
+        this.jButtonUpload1.setEnabled(false);
+        this.jButtonUploadKey.setEnabled(false);
+
+    }//GEN-LAST:event_jRadioTexteActionPerformed
+
+    private void jRadioTexte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioTexte1ActionPerformed
+        this.jTextArea3.setVisible(true);
+        this.jTextArea5.setVisible(true);
+        this.jButtonUpload2.setEnabled(false);
+        this.jButtonUploadKey2.setEnabled(false);
+    }//GEN-LAST:event_jRadioTexte1ActionPerformed
+
+    private void jRadioFichier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioFichier1ActionPerformed
+        this.jTextArea3.setVisible(false);
+        this.jTextArea5.setVisible(false);
+        this.jButtonUpload2.setEnabled(true);
+        this.jButtonUploadKey2.setEnabled(true);
+    }//GEN-LAST:event_jRadioFichier1ActionPerformed
+
+    private void jTextArea4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea4MouseClicked
+        this.writeToClipboard(this.jTextArea4.getText(), null, "Texte chiffré copié dans le presse-papier");        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea4MouseClicked
+
+    private void jTextArea6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea6MouseClicked
+        this.writeToClipboard(this.jTextArea6.getText(), null, "Texte dechiffré copié dans le presse-papier");
+    }//GEN-LAST:event_jTextArea6MouseClicked
+
+    public void writeToClipboard(String s, ClipboardOwner owner, String mess) {
+        if (s == null) {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable transferable = new StringSelection(s);
+            clipboard.setContents(transferable, owner);
+            this.showMessage("Operation de copie reussie", mess, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            this.showMessage("Operation de copie reussie", "Aucun contenu dans la zone de texte", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
     /**
@@ -1203,19 +1585,19 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAsyncGenKey;
+    private javax.swing.JButton jButtonCipher;
+    private javax.swing.JButton jButtonDecrypt;
+    private javax.swing.JButton jButtonUpload1;
+    private javax.swing.JButton jButtonUpload2;
+    private javax.swing.JButton jButtonUploadKey;
+    private javax.swing.JButton jButtonUploadKey2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -1233,6 +1615,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1264,6 +1648,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1273,7 +1658,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioAsync;
     private javax.swing.JRadioButton jRadioDAsync1;
     private javax.swing.JRadioButton jRadioDSync1;
+    private javax.swing.JRadioButton jRadioFichier;
+    private javax.swing.JRadioButton jRadioFichier1;
     private javax.swing.JRadioButton jRadioSync;
+    private javax.swing.JRadioButton jRadioTexte;
+    private javax.swing.JRadioButton jRadioTexte1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1293,6 +1682,8 @@ public class Home extends javax.swing.JFrame {
     private static String[] symetricCiphersAlgorithm = {"AES", "DES"};
     private static String[] asymetricCiphersAlgorithm = {"RSA"};
     private javax.swing.JFileChooser fileChooser;
+    private String filePathKey;
+    private String filePathText;
 
     class SpacedTabbedPaneUI extends BasicTabbedPaneUI {
 

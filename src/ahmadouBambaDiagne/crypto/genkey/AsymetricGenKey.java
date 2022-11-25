@@ -16,8 +16,6 @@ import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -62,10 +60,8 @@ public class AsymetricGenKey {
         }
         Path pathToAFile = Paths.get(filePath).getFileName();
         String parentDirectory = new File(filePath).getParentFile().getAbsolutePath();
-
         pubKeyoperation = saveKey(publicKey, filePath);
         privFilePath = String.join(System.getProperty("file.separator"), parentDirectory, "(key_priv)") + pathToAFile;
-        privKeyoperation = saveKey(privateKey, privFilePath);
         privKeyoperation = saveKey(privateKey, privFilePath);
 
         if (pubKeyoperation.equals("SUCCESSFUL") && privKeyoperation.equals("SUCCESSFUL")) {
@@ -95,6 +91,7 @@ public class AsymetricGenKey {
             Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
             return "Fichier introuvable";
         }
+        System.out.println("key format : " + key.getFormat());
         if (key.getFormat().equalsIgnoreCase("x.509")) {
             try {
                 fileOutputStream.write(key.getEncoded());

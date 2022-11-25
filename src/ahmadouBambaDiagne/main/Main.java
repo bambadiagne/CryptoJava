@@ -3,18 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ahmadouBambaDiagne.main;
+
 import ahmadouBambaDiagne.ui.Connexion;
 import ahmadouBambaDiagne.ui.Home;
+
 /**
  *
  * @author hp
  */
 public class Main {
-public static void main(String[] args) {
-    Home frame = new Home();
-    frame.setVisible(true);
 
-}    
+    public static void main(String[] args) {
+        Connexion frame = new Connexion();
+        frame.setVisible(true);
+
+    }
 }
- 
-
