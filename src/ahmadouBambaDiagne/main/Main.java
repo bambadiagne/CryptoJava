@@ -14,7 +14,7 @@ import ahmadouBambaDiagne.ui.Home;
 public class Main {
 
     public static void main(String[] args) {
-        Connexion frame = new Connexion();
+        Home frame = new Home();
         frame.setVisible(true);
 
     }

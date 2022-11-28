@@ -51,10 +51,12 @@ public class Inscription extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(3, 1));
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(787, 130));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("INSCRIPTION");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -63,7 +65,7 @@ public class Inscription extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(6, 330, 0, 0);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/inscription (1).png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ahmadouBambaDiagne/static/inscription (1).png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -78,9 +80,11 @@ public class Inscription extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridLayout(3, 1));
 
+        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nom d'utilisateur");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -110,9 +114,11 @@ public class Inscription extends javax.swing.JFrame {
 
         jPanel2.add(jPanel8);
 
+        jPanel9.setBackground(new java.awt.Color(102, 102, 102));
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Mot de passe");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -139,9 +145,11 @@ public class Inscription extends javax.swing.JFrame {
 
         jPanel2.add(jPanel9);
 
+        jPanel10.setBackground(new java.awt.Color(102, 102, 102));
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Confirmation");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -170,9 +178,12 @@ public class Inscription extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2);
 
+        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
+        jButton1.setBackground(new java.awt.Color(0, 163, 163));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CREER UN COMPTE");
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

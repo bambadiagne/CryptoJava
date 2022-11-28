@@ -16,6 +16,8 @@ import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -209,4 +211,97 @@ public class AsymetricGenKey {
         result.put("SUCCESSFUL", privateKey);
         return result;
     }
+
+    public static HashMap<String, PublicKey> getPublicKeyDSA(String filePath) {
+        HashMap<String, PublicKey> result = new HashMap<>();
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(filePath);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Fichier introuvable", null);
+            return result;
+        }
+        byte[] b = null;
+        try {
+            b = new byte[fileInputStream.available()];
+        } catch (IOException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier", null);
+            return result;
+        }
+        try {
+            fileInputStream.read(b);
+        } catch (IOException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier", null);
+            return result;
+        }
+        X509EncodedKeySpec publiKeySpec = new X509EncodedKeySpec(b);
+        KeyFactory keyFactory = null;
+        try {
+            keyFactory = KeyFactory.getInstance("DSA");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Algorithme inexistant", null);
+            return result;
+        }
+        PublicKey publicKey = null;
+        try {
+            publicKey = keyFactory.generatePublic(publiKeySpec);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Clé invalide", null);
+            return result;
+        }
+        result.put("SUCCESSFUL", publicKey);
+        return result;
+    }
+
+    public static HashMap<String, PrivateKey> getPrivateKeyDSA(String filePath) {
+        HashMap<String, PrivateKey> result = new HashMap<>();
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(filePath);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Fichier introuvable", null);
+            return result;
+        }
+        byte[] b = null;
+        try {
+            b = new byte[fileInputStream.available()];
+        } catch (IOException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier", null);
+            return result;
+        }
+        try {
+            fileInputStream.read(b);
+        } catch (IOException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Erreur d'operations avec le fichier", null);
+            return result;
+        }
+        PKCS8EncodedKeySpec privaKeySpec = new PKCS8EncodedKeySpec(b);
+        KeyFactory keyFactory = null;
+        try {
+            keyFactory = KeyFactory.getInstance("DSA");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Algorithme inexistant", null);
+            return result;
+        }
+        PrivateKey privateKey = null;
+        try {
+            privateKey = keyFactory.generatePrivate(privaKeySpec);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(AsymetricGenKey.class.getName()).log(Level.SEVERE, null, ex);
+            result.put("Clé invalide", null);
+            return result;
+        }
+        result.put("SUCCESSFUL", privateKey);
+        return result;
+    }
+
 }
