@@ -5,7 +5,6 @@
 package ahmadouBambaDiagne.main;
 
 import ahmadouBambaDiagne.ui.Connexion;
-import ahmadouBambaDiagne.ui.Home;
 
 /**
  *
@@ -14,7 +13,7 @@ import ahmadouBambaDiagne.ui.Home;
 public class Main {
 
     public static void main(String[] args) {
-        Home frame = new Home();
+        Connexion frame = new Connexion();
         frame.setVisible(true);
 
     }

@@ -193,7 +193,7 @@ public class SymetricCipher {
         try {
             cipherOutputStream.close();
             InputStream finput = new FileInputStream(fileOut);
-            String plainText = Base64.getEncoder().encodeToString(finput.readAllBytes());
+            String plainText = new String(finput.readAllBytes());
             finput.close();
 
             result.put("SUCCESSFUL", plainText);

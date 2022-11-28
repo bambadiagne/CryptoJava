@@ -14,6 +14,7 @@ import ahmadouBambaDiagne.crypto.genkey.AsymetricGenKey;
 import ahmadouBambaDiagne.crypto.ciphers.AsymetricCipher;
 import ahmadouBambaDiagne.crypto.ciphers.SymetricCipher;
 import ahmadouBambaDiagne.crypto.signature.CryptoSignature;
+import ahmadouBambaDiagne.utils.Utils;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 
 /**
@@ -77,6 +80,7 @@ public class Home extends javax.swing.JFrame {
         buttonGroup6 = new javax.swing.ButtonGroup();
         buttonGroup7 = new javax.swing.ButtonGroup();
         buttonGroup8 = new javax.swing.ButtonGroup();
+        buttonGroup9 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -204,6 +208,23 @@ public class Home extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTextArea9 = new javax.swing.JTextArea();
+        jPanel35 = new javax.swing.JPanel();
+        jPanel41 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTextArea7 = new javax.swing.JTextArea();
+        jLabel32 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jTextArea8 = new javax.swing.JTextArea();
+        jButton6 = new javax.swing.JButton();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jTextArea10 = new javax.swing.JTextArea();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jRadioConvertSym = new javax.swing.JRadioButton();
+        jRadioConvertAsym = new javax.swing.JRadioButton();
 
         this.buttonGroup3.add(this.jRadioSync);
         this.buttonGroup3.add(this.jRadioAsync);
@@ -222,6 +243,9 @@ public class Home extends javax.swing.JFrame {
 
         buttonGroup8.add(jRadioSignFichier);
         buttonGroup8.add(jRadioSignTexte);
+
+        buttonGroup9.add(this.jRadioConvertSym);
+        buttonGroup9.add(this.jRadioConvertAsym);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(46, 60, 126));
@@ -1385,7 +1409,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addContainerGap(660, Short.MAX_VALUE))
         );
         jPanel34Layout.setVerticalGroup(
             jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1399,6 +1423,196 @@ public class Home extends javax.swing.JFrame {
         jPanel3.add(jPanel34);
 
         jTabbedPane1.addTab("Signature", new javax.swing.ImageIcon(getClass().getResource("/ahmadouBambaDiagne/static/signature.png")), jPanel3); // NOI18N
+
+        jPanel35.setRequestFocusEnabled(false);
+
+        jPanel41.setBackground(new java.awt.Color(251, 234, 235));
+
+        jLabel30.setBackground(new java.awt.Color(46, 60, 126));
+        jLabel30.setFont(new java.awt.Font("Trebuchet MS", 0, 20)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel30.setText("CONVERTIR UN FICHIER OU UNE CLE EN BASE64");
+
+        jButton5.setBackground(new java.awt.Color(46, 60, 126));
+        jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(251, 234, 235));
+        jButton5.setText("Choisir un fichier");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel31.setText("Sortie en base64");
+
+        jTextArea7.setColumns(20);
+        jTextArea7.setRows(5);
+        jTextArea7.setEnabled(false);
+        jTextArea7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea7MouseClicked(evt);
+            }
+        });
+        jTextArea7.setDisabledTextColor(Color.BLACK);
+        jScrollPane10.setViewportView(jTextArea7);
+
+        jLabel32.setBackground(new java.awt.Color(46, 60, 126));
+        jLabel32.setFont(new java.awt.Font("Trebuchet MS", 0, 20)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel32.setText("CONVERTIR HEXADECIMAL EN BASE64");
+
+        jTextArea8.setColumns(20);
+        jTextArea8.setRows(5);
+        jTextArea8.setEnabled(false);
+        jTextArea8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea8MouseClicked(evt);
+            }
+        });
+        jTextArea8.setDisabledTextColor(Color.BLACK);
+        jScrollPane11.setViewportView(jTextArea8);
+
+        jButton6.setBackground(new java.awt.Color(46, 60, 126));
+        jButton6.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(251, 234, 235));
+        jButton6.setText("Convertir");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jTextArea10.setColumns(20);
+        jTextArea10.setRows(5);
+        jTextArea10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea10MouseClicked(evt);
+            }
+        });
+        jScrollPane12.setViewportView(jTextArea10);
+
+        jLabel33.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel33.setText("Entrée en hexadecimal");
+
+        jLabel34.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(46, 60, 126));
+        jLabel34.setText("Sortie en base64");
+
+        jRadioConvertSym.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioConvertSym.setForeground(new java.awt.Color(46, 60, 126));
+        jRadioConvertSym.setSelected(true);
+        jRadioConvertSym.setText("Symetrique");
+        jRadioConvertSym.setAutoscrolls(true);
+
+        jRadioConvertAsym.setBackground(new java.awt.Color(251, 234, 235));
+        jRadioConvertAsym.setForeground(new java.awt.Color(46, 60, 126));
+        jRadioConvertAsym.setText("Asymetrique");
+        jRadioConvertAsym.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioConvertAsymActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
+        jPanel41.setLayout(jPanel41Layout);
+        jPanel41Layout.setHorizontalGroup(
+            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel41Layout.createSequentialGroup()
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(51, Short.MAX_VALUE))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(jPanel41Layout.createSequentialGroup()
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel41Layout.createSequentialGroup()
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(79, 79, 79)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(394, 394, 394)
+                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(349, 349, 349)
+                        .addComponent(jRadioConvertSym)
+                        .addGap(28, 28, 28)
+                        .addComponent(jRadioConvertAsym))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(287, 287, 287)
+                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel41Layout.setVerticalGroup(
+            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel41Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel30)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioConvertSym)
+                    .addComponent(jRadioConvertAsym))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel31)
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(181, 181, 181))
+        );
+
+        javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
+        jPanel35.setLayout(jPanel35Layout);
+        jPanel35Layout.setHorizontalGroup(
+            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1300, Short.MAX_VALUE)
+            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel35Layout.setVerticalGroup(
+            jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 833, Short.MAX_VALUE)
+            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Convertisseur", new javax.swing.ImageIcon(getClass().getResource("/ahmadouBambaDiagne/static/recuperation.png")), jPanel35); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1721,7 +1935,7 @@ public class Home extends javax.swing.JFrame {
                     String opResult = entry.getKey();
 
                     if (opResult.equals("SUCCESSFUL")) {
-                        this.showMessage("Operation reussie", "Chiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
+                        this.showMessage("Operation reussie", "Dechiffrement terminé", JOptionPane.INFORMATION_MESSAGE);
                         String cipherContent = entry.getValue();
                         this.jTextArea6.setText(cipherContent);
 
@@ -2127,6 +2341,63 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonKeyPriv2ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String selectedMode;
+            if (this.jRadioConvertSym.isSelected()) {
+                selectedMode = this.jRadioConvertSym.getText();
+            } else {
+                selectedMode = this.jRadioConvertAsym.getText();
+
+            }
+            HashMap<String, String> convertResult = null;
+            try {
+                convertResult = Utils.convertFileToBase64(fileToSave.getAbsolutePath(), selectedMode);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                this.showMessage("Erreur", "Erreur dans la conversion", JOptionPane.WARNING_MESSAGE);
+            }
+            Map.Entry<String, String> entry = convertResult.entrySet().iterator().next();
+            String opResult = entry.getKey();
+            String valBase64 = entry.getValue();
+            if (opResult.equals("SUCCESSFUL")) {
+                this.jTextArea8.setText(valBase64);
+            } else {
+                this.showMessage("Erreur", opResult, JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            this.showMessage("Erreur", "Veuillez choisir un fichier", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextArea7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea7MouseClicked
+        this.writeToClipboard(this.jTextArea7.getText(), null, "Contenu copié dans le presse-papier");
+    }//GEN-LAST:event_jTextArea7MouseClicked
+
+    private void jTextArea8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea8MouseClicked
+        this.writeToClipboard(this.jTextArea8.getText(), null, "Contenu copié dans le presse-papier");
+
+    }//GEN-LAST:event_jTextArea8MouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String hexString = this.jTextArea10.getText();
+        if (hexString.isEmpty()) {
+            this.showMessage("Erreur", "Chaine hexadecimal vide ", JOptionPane.WARNING_MESSAGE);
+        } else {
+            this.jTextArea7.setText(Utils.hexStringToBase64(hexString));
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextArea10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea10MouseClicked
+
+    private void jRadioConvertAsymActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioConvertAsymActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioConvertAsymActionPerformed
+
     public void writeToClipboard(String s, ClipboardOwner owner, String mess) {
         if (s != null && !s.isEmpty()) {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -2190,10 +2461,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.ButtonGroup buttonGroup8;
+    private javax.swing.ButtonGroup buttonGroup9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAsyncGenKey;
     private javax.swing.JButton jButtonCipher;
     private javax.swing.JButton jButtonDecrypt;
@@ -2233,6 +2507,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2267,18 +2546,22 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel32;
     private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
+    private javax.swing.JPanel jPanel35;
     private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel38;
     private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel40;
+    private javax.swing.JPanel jPanel41;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton jRadioAsync;
+    private javax.swing.JRadioButton jRadioConvertAsym;
+    private javax.swing.JRadioButton jRadioConvertSym;
     private javax.swing.JRadioButton jRadioDAsync1;
     private javax.swing.JRadioButton jRadioDSync1;
     private javax.swing.JRadioButton jRadioFichier;
@@ -2291,6 +2574,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioTexte1;
     private javax.swing.JRadioButton jRadioVerification;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2301,11 +2587,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea10;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextArea6;
+    private javax.swing.JTextArea jTextArea7;
+    private javax.swing.JTextArea jTextArea8;
     private javax.swing.JTextArea jTextArea9;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea jTextSign;

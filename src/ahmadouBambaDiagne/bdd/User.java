@@ -33,7 +33,7 @@ public class User {
     }
 
     public static boolean validatePassword(String password) {
-        return password.length() > 8;
+        return password.length() >= 8;
     }
 
     public static boolean verifyField(String field) {
